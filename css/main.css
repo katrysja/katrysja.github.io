@@ -4,6 +4,34 @@ body {
     background-position: top center;
 }
 
-.container {
+* {
+    font-family: "Rubik";
+}
 
+.container__left {
+    background-color: #efefef;
+}
+
+.my-position {
+    margin-top: 40px;
+    padding-top: 5px;
+    background-color: #a71d25;
+    color: #ffe9e3;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.my-name__firstname,
+.my-name__lastname {
+    font-weight: bold;
+}
+
+.my-name__firstname::first-letter,
+.my-name__lastname::first-letter {
+    font-size: x-large;
+    color: #a71d25;
+}
+
+.container__right {
+    background-color: #fdfdfd;
 }
