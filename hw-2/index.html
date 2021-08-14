@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+</head>
+<body>
+<header>
+    <h1>Hillel PRO. HW 2</h1>
+</header>
+<main>
+
+</main>
+<footer>
+    <h3><a href="./../">Back to homeworks</a></h3>
+</footer>
+
+<script type="text/javascript">
+    (() => {
+        const initialPayment = Number.parseFloat(prompt('Введите пожалуйста сумму начального взноса')),
+            perYearPercent = Number.parseFloat(prompt('Введите пожалуйста проценты прироста депозита в год, от 0 до 100')),
+            incomeTaxesPercent = Number.parseFloat(prompt('Введите пожалуйста процент налога на прибыль, от 0 до 100')),
+            monthCount = Number.parseInt(prompt('Введите пожалуйста количество месяцев'));
+
+        const interestMountly = perYearPercent / 12 / 100, //за месяц прибыль по процентам
+            interestMoutlyEffective = interestMountly * (1 - incomeTaxesPercent / 100), // вычет налога на прибыль
+            currentAmountOnAccount = initialPayment * (1 + interestMoutlyEffective) ** monthCount, //текущая сумма на счету
+            currentAmountOnAccount50years = initialPayment * (1 + interestMoutlyEffective) ** (5 * 12); //5 летний вклад
+
+        alert(`Current amount on account: ${currentAmountOnAccount.toFixed(2)}`);
+        alert(`Amount on account after 50 years: ${currentAmountOnAccount50years.toFixed(2)}`);
+    })();
+</script>
+</body>
+</html>
