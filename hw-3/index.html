@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+</head>
+<body>
+<header>
+    <h1>Hillel PRO. HW 3</h1>
+</header>
+<main>
+
+</main>
+<footer>
+    <h3><a href="./../">Back to homeworks</a></h3>
+</footer>
+
+<script type="text/javascript">
+    (() => {
+        let currentTry = 1;//count  number of trying
+
+        const maxNumber = Number.parseInt(prompt('Type max possible number!')),
+            randomNumber = Math.min(Math.floor(Math.random() * maxNumber + 1), maxNumber);
+
+        if (isNaN(maxNumber) === true) {
+            alert('Your number is not correct!');// user selected not number
+            location.reload();
+            return;
+        }
+
+        const iteration = () => {
+            const userNumber = Number.parseInt(prompt(`Try to guess the number! Type your number  from 0 to ${maxNumber}.`));
+
+            //user selected not number
+            if (isNaN(userNumber) === true) {
+                alert('Your number is not valid!');
+                return;
+            }
+
+            if (userNumber === randomNumber) {
+                alert(`You are right! My congrats! Current try: ${currentTry}.`);
+            } else {
+                alert(`You are wrong! Try again! Your number is ${userNumber > randomNumber ? 'more' : 'less'} than random number.`);
+                currentTry++;
+                iteration();
+            }
+        };
+
+        iteration();
+    })();
+</script>
+</body>
+</html>
