@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+</head>
+<body>
+<header>
+    <h1>Hillel PRO. HW 4</h1>
+</header>
+<main>
+    <form id="settings">
+        <div class="line">
+            <div class="block">
+                <label for="count">Count mountains [n]: </label>
+                <input id="count" type="number" value="3" step="1">
+            </div>
+            <div class="block">
+                <label for="heightMin">Mountain min height [n]: </label>
+                <input id="heightMin" type="number" value="2" min="1" max="10" step="1">
+            </div>
+            <div class="block">
+                <label for="heightMax">Mountain max height [n]: </label>
+                <input id="heightMax" type="number" value="8" min="1" max="10" step="1">
+            </div>
+            <div class="block">
+                <label for="effectTombstoneProbability">Tombstone probability [0...100]: </label>
+                <input id="effectTombstoneProbability" type="number" value="5" min="1" max="100" step="1">
+            </div>
+        </div>
+        <div class="line">
+            <div class="block">
+                <label for="cliffProbability">Cliff probability [0...100]: </label>
+                <input id="cliffProbability" type="number" value="2" min="1" max="100" step="1">
+            </div>
+            <div class="block">
+                <label for="effectGemProbability">Gem probability [0...100]: </label>
+                <input id="effectGemProbability" type="number" value="5" min="1" max="100" step="1">
+            </div>
+            <div class="block">
+                <label for="effectOffsetProbability">Offset probability [0...100]: </label>
+                <input id="effectOffsetProbability" type="number" value="5" min="1" max="100" step="1">
+            </div>
+            <div class="block">
+            </div>
+        </div>
+        <div class="line">
+            <div class="block">
+                <label for="effectProbability">Effect probability [0...100]: </label>
+                <input id="effectProbability" type="number" value="2" min="1" max="100" step="1">
+            </div>
+            <div class="block">
+                <label for="effectGrassProbability">Effect grass probability [n, ..., ...]: </label>
+                <input id="effectGrassProbability" type="number" value="1" step="1">
+            </div>
+            <div class="block">
+                <label for="effectFlowerProbability">Effect flower probability [..., n, ...]: </label>
+                <input id="effectFlowerProbability" type="number" value="1" step="1">
+            </div>
+            <div class="block">
+                <label for="effectThreeProbability">Effect three probability [..., ..., n]: </label>
+                <input id="effectThreeProbability" type="number" value="1" step="1">
+            </div>
+        </div>
+    </form>
+</main>
+<footer>
+    <h3><a href="./../">Back to homeworks</a></h3>
+</footer>
+
+<script type="text/javascript">
+    (() => {
+        const settingsInputs = document.querySelectorAll('#settings input');
+        const settings = {
+            count: 0,
+            heightMin: 0,
+            heightMax: 0,
+            cliffProbability: 0,
+            effectProbability: 0,
+            effectGrassProbability: 0,
+            effectFlowerProbability: 0,
+            effectThreeProbability: 0,
+            effectTombstoneProbability: 0,
+            effectGemProbability: 0,
+            effectOffsetProbability: 0,
+
+            grass: '=',
+            flover: '-*',
+            three: {
+                toString: () => {
+                    const height = Math.floor(Math.random() * 3) + 1;
+
+                    return '='.repeat(height) + '@';
+                }
+            },
+            tombStone: ']-+',
+            gem: '◆'
+        };
+
+        // Update settings and call render
+        Array.from(settingsInputs).forEach((input) => {
+            input.addEventListener('change', () => {
+                updateSettings();
+                render();
+            });
+        });
+
+        updateSettings();
+        render();
+
+        function updateSettings() {
+            settings.count = Number.parseInt(document.querySelector('#count').value);
+            settings.heightMin = Number.parseInt(document.querySelector('#heightMin').value);
+            settings.heightMax = Number.parseInt(document.querySelector('#heightMax').value);
+            settings.cliffProbability = Number.parseInt(document.querySelector('#cliffProbability').value);
+            settings.effectProbability = Number.parseInt(document.querySelector('#effectProbability').value);
+            settings.effectGrassProbability = Number.parseInt(document.querySelector('#effectGrassProbability').value);
+            settings.effectFlowerProbability = Number.parseInt(document.querySelector('#effectFlowerProbability').value);
+            settings.effectThreeProbability = Number.parseInt(document.querySelector('#effectThreeProbability').value);
+            settings.effectTombstoneProbability = Number.parseInt(document.querySelector('#effectTombstoneProbability').value);
+            settings.effectGemProbability = Number.parseInt(document.querySelector('#effectGemProbability').value);
+            settings.effectOffsetProbability = Number.parseInt(document.querySelector('#effectOffsetProbability').value);
+        }
+
+        function render() {
+            console.clear();
+
+            // collect probability array
+            const effects = [
+                // TODO: implement constants and getter for three
+                ...Array(settings.effectFlowerProbability).fill(settings.flover),
+                ...Array(settings.effectGrassProbability).fill(settings.grass),
+                ...Array(settings.effectThreeProbability).fill(settings.three),
+            ];
+
+            // render each mountain
+            for (let i = 0; i < settings.count; i++) {
+                const mountainHeight = Math.floor(Math.random() * (settings.heightMax - settings.heightMin)) + settings.heightMin;
+                const mountainRows = mountainHeight * 2 + 1;
+
+                // render each row
+                for (let j = 0; j < mountainRows; j++) {
+                    // check for cliff
+                    if (Math.random() < settings.cliffProbability / 100) break;
+
+                    let row = '';
+
+                    // bottom of the mountain
+                    if (j > 0 && j < mountainHeight * 2) {
+                        // do we need offset
+                        let offset = 0;
+                        if (Math.random() < settings.effectOffsetProbability / 100) {
+                            offset = Math.random() < 0.5 ? -1 : 1;
+                        }
+
+                        if (j <= mountainHeight) {
+                            row = '#'.repeat(j + offset);
+                        } else {
+                            row = '#'.repeat(mountainRows - 1 - j + offset);
+                        }
+
+                        if (Math.random() < settings.effectGemProbability / 100) {
+                            const place = Math.floor(Math.random() * row.length);
+                            row = row.slice(0, place) + settings.gem + row.slice(place + 1);
+                        }
+                    }
+
+                    // top of the mountain
+                    if (j < mountainHeight) {
+                        // before peak
+                        row += '\\';
+                    } else if (j > mountainHeight) {
+                        // after peak
+                        row += '/';
+                    } else {
+                        // peak
+                        row += '|';
+                    }
+
+                    // check what group of effect do we need
+                    if (j !== mountainHeight) {
+                        // do we need to use an effect
+                        if (Math.random() < settings.effectProbability / 100) {
+                            // get random effect
+                            row += effects[Math.floor(Math.random() * effects.length)];
+                        }
+                    } else {
+                        // do we need to use tombstone or not
+                        if (Math.random() < settings.effectTombstoneProbability / 100) {
+                            row += ']-+';
+                        }
+                    }
+
+                    console.log(row);
+                }
+
+                // break between mountains
+                console.log('');
+            }
+        }
+    })();
+</script>
+
+<style>
+    .line {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .block {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin: 2px 8px;
+    }
+</style>
+</body>
+</html>
