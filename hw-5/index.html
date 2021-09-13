@@ -169,11 +169,33 @@
         return result;
     };
 
-    const getCategoryBy = ({array, howDeep, isDisabled, name = ''}) => {
+    const getEnabledCategories = (array) => {
+        const filterFnc = item => item.disabled === false;
+
+        const result = array.filter(filterFnc);
+        array.map(item => result.push(...item.children.filter(filterFnc)));
+
+        return result.map(item => {
+            return {name: item.name, id: item.id}
+        });
+    };
+
+    const getEnabledCategoriesByName = (array, name) => {
+        const filterFnc = item => item.disabled === false && (new RegExp(name, 'i')).test(item.name);
+
+        const result = array.filter(filterFnc);
+        array.map(item => result.push(...item.children.filter(filterFnc)));
+
+        return result.map(item => {
+            return {name: item.name, id: item.id}
+        });
+    };
+
+    const getCategoryByRules = ({array, howDeep, isDisabled, name = ''}) => {
         let result = array.filter(item => item.disabled === isDisabled && (new RegExp(name, 'i')).test(item.name));
 
         if (howDeep > 1) {
-            array.map(item => result.push(...getCategoryBy({
+            array.map(item => result.push(...getCategoryByRules({
                 array: item.children,
                 howDeep: howDeep - 1,
                 isDisabled,
@@ -186,12 +208,16 @@
         });
     };
 
+    console.group('Primitive functions');
+    console.log('By ID', getCategoryByID({array: input, id: '957eb194-6151-4e98-b1f9-b28a24807902'}));
+    console.log('Disabled include children', getEnabledCategories(input));
+    console.log('Disabled witch contain name Bread, include children', getEnabledCategoriesByName(input, 'Bread'));
+    console.groupEnd();
 
-
-    console.log(getCategoryByID({array: input, id: '957eb194-6151-4e98-b1f9-b28a24807902'}));
-    console.log(getCategoryBy({array: input, howDeep: 1, isDisabled: false}));
-    console.log(getCategoryBy({array: input, howDeep: 2, isDisabled: false}));
-    console.log(getCategoryBy({array: input, howDeep: 2, isDisabled: false, name: 'Bread'}))
+    console.group('Configurable functions');
+    console.log('Disabled include children', getCategoryByRules({array: input, howDeep: 2, isDisabled: false}));
+    console.log('Disabled witch contain name Bread, include children', getCategoryByRules({array: input, howDeep: 2, isDisabled: false, name: 'Bread'}));
+    console.groupEnd();
 </script>
 </body>
 </html>
