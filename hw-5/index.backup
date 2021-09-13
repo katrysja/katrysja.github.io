@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /**
+     * Basic class with params
+     * @param id {string} - hash
+     * @param disabled {boolean} -
+     * @param name {string} -
+     * @param children {Array} -
+     * @constructor
+     */
+    class Category {
+        constructor({id, disabled, name, children}) {
+            this.id = id;
+            this.disabled = disabled;
+            this.name = name;
+            this.children = new CategoryList(children);
+
+            return this;
+        }
+    }
+
+    /**
+     * List of Category
+     * @param array {Array<Category>} - list of categories
+     * @constructor
+     */
+    class CategoryList extends Array {
+        constructor(array) {
+            super(...array.map(item => new Category(item)));
+        }
+
+        getByID(id) {
+            let result = this.find(item => item.id === id);
+
+            if (result === undefined) {
+                result = this.find(item => item.children.getByID(id));
+            }
+
+            return result;
+        };
+    }
+
+    /**
+     * Get category by id via recursive method
+     * @param id {String}
+     */
+
+    const categoryList = new CategoryList([
+        {
+            id: 'beaeea2c-44f1-4563-862d-fc37cf1a139b',
+            disabled: false,
+            name: 'Bread',
+            children: [
+                {
+                    id: 'b92ef86f-13db-4d36-8e8a-2dbbbae472ef',
+                    disabled: false,
+                    name: 'Croissants',
+                    children: []
+                },
+                {
+                    id: 'b0bc1865-63ee-4951-8368-065658bde70b',
+                    disabled: false,
+                    name: 'White bread',
+                    children: []
+                },
+                {
+                    id: '9f260355-2f7e-444b-8888-46f41d34313a',
+                    disabled: true,
+                    name: 'Black bread',
+                    children: []
+                },
+            ]
+        },
+        {
+            id: '8ed6a3fa-8942-4e65-b26c-94a9973b8622',
+            disabled: false,
+            name: 'Fruits & Vegetables',
+            children: [
+                {
+                    id: '3ef868cf-a536-4789-809e-fb2e4aa516d4',
+                    disabled: false,
+                    name: 'Fruits',
+                    children: []
+                },
+                {
+                    id: '34b10d30-603a-48a4-a380-935ba891e5da',
+                    disabled: true,
+                    name: 'Vegetables',
+                    children: [
+                        {
+                            id: '62a85aaf-c6a9-4a76-8d37-52ab282f796b',
+                            disabled: false,
+                            name: 'Local vegetables',
+                            children: []
+                        },
+                        {
+                            id: 'f2bc640a-0081-4db4-b7f2-4c8133392a9e',
+                            disabled: false,
+                            name: 'Imported vegetables',
+                            children: []
+                        },
+                    ]
+                },
+                {
+                    id: '84c49514-c9a4-4ed7-aa8c-a120098761f1',
+                    disabled: true,
+                    name: 'Greens',
+                    children: []
+                },
+            ]
+        },
+        {
+            id: '957eb194-6151-4e98-b1f9-b28a24807902',
+            name: 'Grocery',
+            children: [
+                {
+                    id: '07a3b755-c19b-47ce-810b-adaa3c958a69',
+                    disabled: false,
+                    name: 'Spaghetties',
+                    children: []
+                },
+                {
+                    id: '3bbf879d-67f6-45e4-8dca-deb0ad3ebf43',
+                    disabled: false,
+                    name: 'Cereals',
+                    children: []
+                },
+                {
+                    id: '2406bcfc-d795-4855-a16a-6d0c74fdc3bc',
+                    disabled: false,
+                    name: 'Canned food',
+                    children: [
+                        {
+                            id: '3e546013-fbad-4ac2-ac8f-5e1b35c22d70',
+                            disabled: false,
+                            name: 'Canned meat',
+                            children: [
+                                {
+                                    id: 'd3178d75-dc00-4e6e-be2f-34fe83e9a4c5',
+                                    disabled: false,
+                                    name: 'Canned pork',
+                                    children: []
+                                },
+                                {
+                                    id: '6ef12fe5-fb55-49b6-b722-3c734f963041',
+                                    disabled: true,
+                                    name: 'Canned beef',
+                                    children: []
+                                },
+                                {
+                                    id: 'a69e5dc5-9ef9-4218-86d9-66d166236aeb',
+                                    disabled: false,
+                                    name: 'Canned chicken',
+                                    children: []
+                                },
+                            ]
+                        },
+                        {
+                            id: 'f38300dd-2e82-40bf-9f5b-c73ca79e9461',
+                            disabled: false,
+                            name: 'Canned fish',
+                            children: []
+                        },
+                        {
+                            id: '1d3c598e-dd4e-453a-ad56-49c31cfc094f',
+                            disabled: false,
+                            name: 'Canned vegetables',
+                            children: []
+                        },
+                    ]
+                },
+            ]
+        },
+        {
+            id: 'b47b2bbc-df04-4c15-8016-ac4dbcf33cca',
+            name: 'Drinks',
+            children: [
+                {
+                    id: '88a31184-2b7a-454d-b4ef-1c89e9f3acf6',
+                    disabled: false,
+                    name: 'Bottled water',
+                    children: []
+                },
+                {
+                    id: '448ba31c-2e7d-4249-a5eb-eb51829bff42',
+                    disabled: false,
+                    name: 'Sweet water',
+                    children: []
+                },
+                {
+                    id: '0aef2b93-9b3e-40d3-af8c-32a40c7ffedf',
+                    disabled: false,
+                    name: 'Lemonades',
+                    children: []
+                },
+            ]
+        }
+    ]);
+
+    console.log(categoryList.getByID('957eb194-6151-4e98-b1f9-b28a24807902'));
+    console.log(categoryList);
+</script>
+</body>
+</html>

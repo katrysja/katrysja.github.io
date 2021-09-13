@@ -59,5 +59,16 @@ MOUNTAIN VIEW X
   
 - на вершине иногда может быть могилка путника: ]-+
 - в глубине гор иногда могут быть алмазы: ◆
-
 Все вероятности хардкодятся.
+
+## Hometask #5 Categories Search
+
+Imagine we have e-commerce grocery. There are a bunch of categories and sub-categories, which are organised in a tree-like structure.
+Task
+Create 3 functions, which work with categories tree.
+
+1.Function that returns category by id.
+2.Function that returns array of { name, id } of not disabled category’s first-level children’s.
+3.Function that returns array of { name, id } of not disabled categories where name contains given substring. Use case insensitive comparision for a search
+
+
