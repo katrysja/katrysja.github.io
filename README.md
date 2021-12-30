@@ -71,4 +71,14 @@ Create 3 functions, which work with categories tree.
 2.Function that returns array of { name, id } of not disabled category’s first-level children’s.
 3.Function that returns array of { name, id } of not disabled categories where name contains given substring. Use case insensitive comparision for a search
 
+## Hometask #7 event, form
+
+Сделайте форму, которая содержит след элементы:
+1.Поле - Ширина таблицы
+2.Поле - Высота таблицы
+3.Поле - Символ для заполнения ячеек таблицы
+4.Кнопка "Нарисовать таблицу"
+
+Реализуйте следующий функционал:
+По сабмиту формы соберите данные из полей и используйте их для того, чтобы программно (т. е. из JavaScript, а не заранее сверстать) нарисовать таблицу соотв. размера и заполнить каждую ячейку таблицы символом, указанным в поле.
 
