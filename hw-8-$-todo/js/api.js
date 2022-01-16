@@ -8,6 +8,14 @@ export function getTodoListItem(id) {
     return $.ajax(`${BASE_URL}/todos/${id}`);
 }
 
+export function postTodoListItem(data) {
+    return $.ajax({
+        type: 'POST',
+        url: `${BASE_URL}/todos/`,
+        data
+    });
+}
+
 export function patchTodoListItem(id, data) {
     return $.ajax({
         type: 'PATCH',
