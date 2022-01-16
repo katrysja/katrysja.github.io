@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "montserrat", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: linear-gradient(110deg, #a9f5a9, #642efe, #f2f5a9);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 880px;
+    margin: auto;
+    padding: 10px;
+}
+
+.txtb {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #000;
+    background: none;
+    padding: 10px;
+    outline: none;
+    font-size: 18px;
+}
+
+h3 {
+    margin: 10px 0;
+}
+
+.task {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 18px;
+    margin: 6px 0;
+    overflow: hidden;
+}
+
+.task i {
+    float: right;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.task.task-completed .task-uncheck {
+    display: none;
+}
+
+.task.task-uncompleted .task-check {
+    display: none;
+}
+
+.completed .task {
+    background: rgba(0, 0, 0, .5);
+    color: #ffffff;
+}
